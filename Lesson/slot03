@@ -34,12 +34,14 @@ stats.ttest_ind(dfKhoiC['T'], dfKhoiC['L'], equal_var=True)
 
 # Bài tập: Suy diễn xem trung bình L có bằng trung bình H cho thí sinh thi khối C hay không với mức tin cậy 95%
 
+#=====================================================================#
 # Hãy kiểm tra xem điểm trung bình T có bằng L
 ztest(df['T'], df['L'], value=0)
 
 # Bài tập: Kiểm tra trung bình L và H có bằng nhau không với mức tin cậy 95%
 
-# Kiểm tra xem T và L có tương quan không?
+#=====================================================================#
+# Hãy kiểm tra xem T và L có tương quan không?
 from scipy.stats.stats import pearsonr
 pearsonr(df['T'], df['L'])
 
