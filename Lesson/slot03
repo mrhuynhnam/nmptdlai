@@ -12,60 +12,51 @@ df['T'].fillna(0, inplace=True)
 df['L'].fillna(df['L'].mean(), inplace=True)
 df['H'].fillna(df['H'].median(), inplace=True)
 
-# Sử dụng dữ liệu mẫu hãy suy diễn xem trung bình điểm thi T của toàn bộ thí sinh thi khối C có bằng 4.0
+#=====================================================================#
+# Hãy cho biết trung bình điểm thi T của toàn bộ thí sinh thi khối C có bằng 4.0
 dfKhoiC = df.loc[df['KT'] == 'C']
 import scipy.stats as stats
 stats.ttest_1samp(dfKhoiC['T'], popmean=4.0)
 
 # Bài tập: Sinh viên kiểm tra xem điểm trung bình của môn thi L của khối thi C có bằng 5.7 hay không
 
+#=====================================================================#
 # Hãy kiểm tra xem trung bình T có bằng 8.0
 from statsmodels.stats.weightstats import ztest as ztest
 ztest(df['T'], value=8.0)
 
-#Bài tập: Hãy kiểm tra xem trung bình H có bằng 6.7
+# Bài tập: Hãy kiểm tra xem trung bình H có bằng 6.7
 
+#=====================================================================#
+# Hãy kiểm tra xem trung bình điểm thi T và trung bình điểm thi L của thí sinh thi khối C có bằng nhau không?
 dfKhoiC = df.loc[df['KT'] == 'C']
-stats.ttest_ind(dfKhoiC['M1'], dfKhoiC['M2'], equal_var=True)
+stats.ttest_ind(dfKhoiC['T'], dfKhoiC['L'], equal_var=True)
 
-# Bài tập: 
-# Suy diễn xem trung bình M1 có bằng trung bình M3 cho
-# thí sinh thi khối C hay không với mức tin cậy 95%
+# Bài tập: Suy diễn xem trung bình L có bằng trung bình H cho thí sinh thi khối C hay không với mức tin cậy 95%
 
-ztest(df['M1'], df['M2'], value=0)
+# Hãy kiểm tra xem điểm trung bình T có bằng L
+ztest(df['T'], df['L'], value=0)
 
-# Bài tập: Kiểm tra trung bình M2 và M3 có bằng nhau không
-# với mức tin cậy 95%
+# Bài tập: Kiểm tra trung bình L và H có bằng nhau không với mức tin cậy 95%
 
+# Kiểm tra xem T và L có tương quan không?
 from scipy.stats.stats import pearsonr
+pearsonr(df['T'], df['L'])
 
-pearsonr(df['M1'], df['M2'])
+# Bài tập: Sinh viên làm tương tự cho L và H có tương quan hay không?
 
-# Bài tập: Sinh viên làm tương tự cho M1 và M3 có tương quan hay không?
-
-# Bài tập: Sinh viên làm tương tự cho M2 và M3 có tương quan hay không?
-
-import scipy.stats as stats
-
-crosdata = pd.crosstab(df['GT'], [df['NGHE']], rownames=['GT'], colnames=['NGHE'])
-crosdata
-
+#=====================================================================#
+# Hãy kiểm tra xem có sự phụ thuộc nào giữa kết quả thi và giới tính hay không
+crosdata = pd.crosstab(df['GT'], [df['KQ']], rownames=['GT'], colnames=['KQ'])
 odd_ratio, p_value = stats.fisher_exact(crosdata)
 print('odd ratio is : ' + str(odd_ratio))
 print('p_value is : ' + str(p_value))
 
+#=====================================================================#
+# Hãy kiểm tra xem có sự phụ thuộc nào giữa khối thi và khu vực khi đăng ký dự thi hay không 
 from scipy.stats import chi2_contingency
-
 crosdata = pd.crosstab(df['KV'], [df['KT']], rownames=['KV'], colnames=['KT'])
-crosdata
-
-import matplotlib.pyplot as plt
-plt.pcolor(crosdata,cmap='RdBu')
-plt.colorbar()
-plt.show()
-
 stat, p, dof, expected = chi2_contingency(crosdata)
- 
 alpha = 0.05
 print("p value is " + str(p))
 if p <= alpha:
@@ -75,43 +66,51 @@ else:
 
 # Bài tập: GT và KT có mối quan hệ hay không?
 
+#=====================================================================#
+# Hãy cho biết điểm T có phụ thuộc vào giới tính (GT) không
 import statsmodels.api as sm
 from statsmodels.formula.api import ols
-
-model = ols('M1 ~ GT', data=df).fit()
+model = ols('T ~ GT', data=df).fit()
 aov_table = sm.stats.anova_lm(model, typ=1)
 aov_table
 
-# Bài tập: Điểm M2 có phụ thuộc vào khu vực hay không
+# Bài tập: Điểm L có phụ thuộc vào khu vực hay không
 
-# Bài tập: Điểm M3 có phụ thuộc khối thi hay không
+# Bài tập: Điểm H có phụ thuộc khối thi hay không
 
-model = ols('M1 ~ GT + KV + GT:KV',data=df).fit()
+#=====================================================================#
+# Hãy cho biết điểm T có phụ thuộc vào nhóm GT trên từng phân loại KV hay không
+model = ols('T ~ GT + KV + GT:KV',data=df).fit()
 result = sm.stats.anova_lm(model, type=2)
 print(result)
 
-# Bài tập: Phân tích xem M2 có phụ thuộc trên nhóm KV theo từng loại KT hay không
+# Bài tập: Phân tích xem L có phụ thuộc trên nhóm KV theo từng loại KT hay không
 
+#=====================================================================#
+# Hãy cho biết sự ảnh hưởng của điểm T đến L
 import statsmodels.api as sm
-X_with_constant = sm.add_constant(df[["M1"]].values)
-y = df[['M3']].values
+X_with_constant = sm.add_constant(df[["T"]].values)
+y = df[['L']].values
 result = sm.OLS(y, X_with_constant).fit()
 print(result.summary())
 
-# Bài tập: Giả sử thí sinh có điểm M1 = 6.7 thì hãy dự báo điểm M3 sẽ là bao nhiêu
-# Bài tập: Phân tích sự ảnh hưởng của M2 đến điểm thi M3. Hãy cho biết M2 = 5.7 , hỏi M3 được dự báo là bao nhiêu
+# Bài tập: Giả sử thí sinh có điểm T = 6.7 thì hãy dự báo điểm L sẽ là bao nhiêu
+# Bài tập: Phân tích sự ảnh hưởng của H đến điểm thi L. Hãy cho biết H = 5.7 , hỏi L được dự báo là bao nhiêu
 
+#=====================================================================#
+# Hãy phân tích sự ảnh hưởng của điểm T, L đến H
 import statsmodels.api as sm
-X_with_constant = sm.add_constant(df[["M1","M2"]].values)
-y = df[['M3']].values
+X_with_constant = sm.add_constant(df[["T","L"]].values)
+y = df[['H']].values
 result = sm.OLS(y, X_with_constant).fit()
 print(result.summary())
 
-# Bài tập: Hãy phân tích sự ảnh hưởng của điểm M1, M2 đến M3 trên những thí sinh thi khối A1
-# Cho biết nếu M1 = 6.0 và M2 = 5.5 
-# thì dự đoán học sinh đi thi khối A1 sẽ được điểm M3 là nhiêu
+# Bài tập: Hãy phân tích sự ảnh hưởng của điểm L, H đến T trên những thí sinh thi khối A1
+# Cho biết nếu L = 6.0 và H = 5.5 thì dự đoán học sinh đi thi khối A1 sẽ được điểm T là nhiêu
 
-X = df[["M1","M2"]].values
-y = df[['M3']].values
+#=====================================================================#
+# Hãy cho biết mức độ tác động của T, L đến điểm H
+X = df[["T","L"]].values
+y = df[['H']].values
 result = sm.OLS(y, X).fit()
 print(result.summary())
