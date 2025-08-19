@@ -3,31 +3,27 @@ df = pd.read_csv('dulieuxettuyendaihoc.csv',
                  header=0,delimiter=',',encoding='utf-8')
 
 df.rename(columns={'NGAYTHI':'NT',
-                   'DINHHUONGNGHENGHIEP':'NGHE'}, 
+                   'KETQUA':'KQ','M1':'T'
+                   ,'M2':'L'
+                   ,'M3':'H'}, 
                    inplace=True)
-df
 
+df['T'].fillna(0, inplace=True)
+df['L'].fillna(df['L'].mean(), inplace=True)
+df['H'].fillna(df['H'].median(), inplace=True)
+
+# Sử dụng dữ liệu mẫu hãy suy diễn xem trung bình điểm thi T của toàn bộ thí sinh thi khối C có bằng 4.0
 dfKhoiC = df.loc[df['KT'] == 'C']
-dfKhoiC['M1']
-
-dfKhoiC['M1'].describe()
-
 import scipy.stats as stats
+stats.ttest_1samp(dfKhoiC['T'], popmean=4.0)
 
-stats.ttest_1samp(dfKhoiC['M1'], popmean=4.0)
+# Bài tập: Sinh viên kiểm tra xem điểm trung bình của môn thi L của khối thi C có bằng 5.7 hay không
 
-# Bài tập: Sinh viên kiểm tra xem điểm trung bình của môn thi M2 của khối thi C có bằng 5.7 hay không
-
-# Bài tập: Sinh viên về tự tìm hiểu cách thiết lập mức tin cậy hoặc sai lầm
-# Bài tập: Hãy kiểm tra xem có phải điểm trung bình M3
-# của thí sinh thi khối C có là 6.5 hay không
-# với mức sai lầm là 10%
-
+# Hãy kiểm tra xem trung bình T có bằng 8.0
 from statsmodels.stats.weightstats import ztest as ztest
+ztest(df['T'], value=8.0)
 
-ztest(df['M1'], value=8.0)
-
-#Bài tập: Hãy kiểm tra xem trung bình M2 có bằng 6.7
+#Bài tập: Hãy kiểm tra xem trung bình H có bằng 6.7
 
 dfKhoiC = df.loc[df['KT'] == 'C']
 stats.ttest_ind(dfKhoiC['M1'], dfKhoiC['M2'], equal_var=True)
