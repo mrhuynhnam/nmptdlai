@@ -72,14 +72,7 @@ salaryLA = [5.5,6.0,6.0,5.5,6.0,5.0]
 df = pd.DataFrame(list(zip(year, salaryHCM,salaryLA)),
                   columns=['Year', 'HCM','LA'])
 df
-
-max_la = df['LA'].abs().max()
-df['macLA'] = df['LA'] / max_la
-
-df
-
-# Sinh viên tự gõ lệnh biểu diễn max absolute của HCM
-
+----- MaxAbsScaler-------
 from sklearn.preprocessing import MaxAbsScaler
 scaler = MaxAbsScaler()
 scaled = scaler.fit_transform(df[['HCM','LA']])
@@ -93,14 +86,7 @@ vSc
 vR = scaler.inverse_transform([[0.5,0.8]])
 vR
 
-min_la = df['LA'].min()
-max_la = df['LA'].max()
-df['mmcLA'] = (df['LA'] - min_la) / (max_la - min_la)
-
-df
-
-# Sinh viên tự làm min-max scale cho HCM
-
+------ MinMaxScaler---------
 from sklearn.preprocessing import MinMaxScaler
 
 scaler = MinMaxScaler()
@@ -111,16 +97,9 @@ print(scaled_df)
 
 #Bài tập: Giả sử ta có lương của HCM và LA lần lượt là 10.0 và 4.5 thì qua scaler bằng bao nhiêu?
 #Bài tập: Giả sử có giá trị lần lượt là 0.8 và 1.8 hãy cho biết trước khi biến đổi scaler thì giá trị là bao nhiêu
------------------------------
 
-mean_la = df['LA'].mean()
-std_la = df['LA'].std()
-df['zLA'] = (df['LA'] - mean_la) / std_la
 
-df
-
-# Sinh viên tự tính z-score cho HCM
-
+----------------------------- Standardization or Z-Score ----------
 from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
@@ -132,7 +111,7 @@ print(scaled_df)
 
 # Hãy dùng Z-Score để đưa ra kết luận: Nếu một người có thu nhập 15 triệu ở HCM, một người ở LA có thu nhập 12 triệu thì người nào sinh hoạt thoải mái hơn
 
--------------------------------
+------------------------------- Built-in Function Transformation ------------
 def funcX(x):
     return x*x + 1
 
@@ -140,10 +119,12 @@ df['TransformX'] = funcX(df[["LA"]])
 
 df
 
-# Bài tập
-# Sinh viên vẽ biểu đồ phân phối lương trung bình của HCM
-# Tính skenewss và kurtorsis của lương trung bình HCM
+# Bài tập 1
+# Sinh viên vẽ biểu đồ phân phối lương trung bình của HCM sau khi dữ liệu được transform qua hàm funcX
+# Tính skenewss và kurtorsis của lương trung bình HCM sau khi dữ liệu được transform qua hàm funcX
+
+# Bài tập 2
 # Sử dụng hàm log để transform dữ liệu lương ở HCM
-# Vẽ biểu đồ phân phối của dữ liệu lương trung bình của HCM sau khi transform
-# Tính skenewss và kurtorsis của dữ liệu lương trung bình HCM sau khi transform
-# Hãy so sánh độ nghiêng, độ nhọn phân phối sau khi transform so với dữ liệu ban đầu 
+# Vẽ biểu đồ phân phối của dữ liệu lương trung bình của HCM sau khi transform qua hàm log
+# Tính skenewss và kurtorsis của dữ liệu lương trung bình HCM sau khi transform qua hàm log
+# Hãy so sánh độ nghiêng, độ nhọn phân phối của HCM sau khi transform qua hàm log, funcX so với dữ liệu ban đầu 
