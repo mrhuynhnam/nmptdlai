@@ -1,0 +1,82 @@
+[
+  {
+    "walletID": "1",
+    "walletName": "Thanh Thao",
+    "totalBalance": 200000,
+    "transactionHistory": [
+      {"transactionID": "1232343", "sender": "system", "recipient": "1", "amount": 100000, "fee": 324242, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "2",
+    "walletName": "BTC Main",
+    "totalBalance": 500000,
+    "transactionHistory": [
+      {"transactionID": "2233445", "sender": "system", "recipient": "2", "amount": 300000, "fee": 1000, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "3",
+    "walletName": "ETH Main",
+    "totalBalance": 300000,
+    "transactionHistory": [
+      {"transactionID": "3233445", "sender": "system", "recipient": "3", "amount": 150000, "fee": 500, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "4",
+    "walletName": "USDT Wallet",
+    "totalBalance": 100000,
+    "transactionHistory": [
+      {"transactionID": "4233445", "sender": "system", "recipient": "4", "amount": 100000, "fee": 100, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "5",
+    "walletName": "BNB Wallet",
+    "totalBalance": 80000,
+    "transactionHistory": [
+      {"transactionID": "5233445", "sender": "system", "recipient": "5", "amount": 80000, "fee": 80, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "6",
+    "walletName": "SOL Wallet",
+    "totalBalance": 60000,
+    "transactionHistory": [
+      {"transactionID": "6233445", "sender": "system", "recipient": "6", "amount": 60000, "fee": 60, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "7",
+    "walletName": "DOGE Wallet",
+    "totalBalance": 40000,
+    "transactionHistory": [
+      {"transactionID": "7233445", "sender": "system", "recipient": "7", "amount": 40000, "fee": 40, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "8",
+    "walletName": "ADA Wallet",
+    "totalBalance": 30000,
+    "transactionHistory": [
+      {"transactionID": "8233445", "sender": "system", "recipient": "8", "amount": 30000, "fee": 30, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "9",
+    "walletName": "XRP Wallet",
+    "totalBalance": 20000,
+    "transactionHistory": [
+      {"transactionID": "9233445", "sender": "system", "recipient": "9", "amount": 20000, "fee": 20, "transactionType": "nạp"}
+    ]
+  },
+  {
+    "walletID": "10",
+    "walletName": "LTC Wallet",
+    "totalBalance": 10000,
+    "transactionHistory": [
+      {"transactionID": "10233445", "sender": "system", "recipient": "10", "amount": 10000, "fee": 10, "transactionType": "nạp"}
+    ]
+  }
+]
