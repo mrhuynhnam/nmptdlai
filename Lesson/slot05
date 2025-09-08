@@ -33,7 +33,7 @@ accuracy_score(y_test,y_test_predicted)
 from sklearn.metrics import confusion_matrix
 cf_matrix = confusion_matrix(y_test, y_test_predicted)
 
-# Lưu mô hình huấn luyện
+# Lưu trữ mô hình huấn luyện
 import pickle
 pickle.dump(knnModel, open('model_KNN_Heart.sav', 'wb'))
 
